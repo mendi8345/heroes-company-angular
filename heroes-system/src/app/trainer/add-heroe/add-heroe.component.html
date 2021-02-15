@@ -1,0 +1,73 @@
+<!-- Full screen modal -->
+<div class="modal-dialog modal-fullscreen-sm-down">
+    <div class="row" style="justify-content: center;">
+        <div class="col-xs-12">
+            <form [formGroup]="heroeForm" (ngSubmit)="onSubmit()">
+                <div class="row" style="justify-content: center;">
+                    <div class="col-xs-12">
+                        <button type="submit" class="btn btn-success">
+            Save
+          </button>
+                        <button type="button " class="btn btn-danger " (click)="onCancel() ">
+            Cancel
+          </button>
+                    </div>
+                </div>
+                <div class="row" style="justify-content: center;">
+                    <div class="col-xs-12 ">
+                        <div class="form-group ">
+                            <label for="name">Name</label>
+                            <input type="text " id="name" formControlName="name" class="form-control " />
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="justify-content: center;">
+                    <div class="col-xs-12">
+                        <div class="form-group ">
+                            <label for="abilit ">ability</label>
+                            <input type="text" id="ability " formControlName="ability" class="form-control " #ability />
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="row ">
+                <div class="col-xs-12 ">
+                    <img [src]="imagePath.value " class="img-responsive " />
+                </div>
+            </div> -->
+                <div class="row" style="justify-content: center;">
+                    <div class="col-xs-12 ">
+                        <div class="form-group">
+                            <label for="currentPower">current Power</label>
+                            <input type="text" id="currentPower " class="form-control " formControlName="currentPower" rows="6 ">
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="justify-content: center;">
+                    <div class="col-xs-12 ">
+                        <div class="form-group ">
+                            <label for="startingPower ">starting Power</label>
+                            <input type="number " id="startingPower" class="form-control " formControlName="startingPower" rows="6 ">
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="justify-content: center;">
+                    <div class="col-xs-12 ">
+                        <div class="form-group ">
+                            <label for="startDat">start date</label>
+                            <input type="date" id="startDate " class="form-control " formControlName="startDate" rows="6 ">
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="justify-content: center;">
+                    <div class="col-xs-12 ">
+                        <div class="form-group ">
+                            <label for="suitColors">suit Colors</label>
+                            <input type="text " id="suitColors " class="form-control " formControlName="suitColors" rows="6 ">
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
