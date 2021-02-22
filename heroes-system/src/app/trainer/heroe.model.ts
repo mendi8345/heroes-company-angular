@@ -8,7 +8,12 @@ export class Heroe {
   public currentPower: string;
   public startDate: string;
   public suitColors: string;
+  public dailyPracticeState:DailyPracticeState ;
 
   constructor() {
   }
+
+}
+  class DailyPracticeState{
+  public practiceCounter: number;
 }

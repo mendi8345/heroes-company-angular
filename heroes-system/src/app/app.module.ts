@@ -15,8 +15,7 @@ import {authInterceptorProviders} from './trainer/trainer-profile/auth.intercept
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    // TrainerComponent
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

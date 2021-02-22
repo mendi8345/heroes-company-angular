@@ -6,7 +6,7 @@ import {TokenStorageService} from 'src/app/auth/token-storage.service';
 import {User} from 'src/app/auth/user.model';
 import {TrainerApiService} from '../trainer-api.service';
 import {TrainerService} from '../trainer.service';
-import {Heroe} from './Heroe.model';
+import {Heroe} from '../heroe.model';
 
 @Component({
   selector: 'app-trainer-heroes',

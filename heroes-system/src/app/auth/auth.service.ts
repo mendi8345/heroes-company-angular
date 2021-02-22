@@ -12,16 +12,9 @@ import {throwError, BehaviorSubject, Observable} from 'rxjs';
 import {environment} from 'src/environments/environment';
 import {User} from './user.model';
 import {TokenStorageService} from './token-storage.service';
+import {TrainerApiService} from '../trainer/trainer-api.service';
 
-export interface AuthResponseData {
-  kind: string;
-  idToken: string;
-  email: string;
-  refreshToken: string;
-  expiresIn: string;
-  localId: string;
-  registered?: boolean;
-}
+
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -30,11 +23,14 @@ const httpOptions = {
 @Injectable({providedIn: 'root'})
 export class AuthService {
   user=new BehaviorSubject<User>(null);
-  authApi=environment.API+"api/auth/"
+  authApi=environment.API+"/api/auth/"
 
   private tokenExpirationTimer: any;
 
-  constructor(private http: HttpClient, private router: Router,private tokenStorage:TokenStorageService) {}
+  constructor(private http: HttpClient,
+    private router: Router,
+    private tokenStorage:TokenStorageService,
+    private trainerApiService:TrainerApiService) {}
 
   register(user): Observable<any> {
     return this.http.post(this.authApi + 'signup', {
@@ -46,9 +42,20 @@ export class AuthService {
       // catchError(this.handleError),
       tap(resData => {
         this.handleAuthentication(resData)
-      })
-    );
-  }
+        const id=resData.id
+        const name=resData.username
+         const trainer={id,name}
+         this.trainerApiService.register(trainer).subscribe(
+          data => {
+            console.log(data)
+          },
+          err => {
+            console.log(err);
+
+          });
+      } )
+  );
+}
 
   login(credentials): Observable<any>  {
     return this.http.post(
@@ -71,6 +78,7 @@ export class AuthService {
     this.tokenStorage.saveToken(user.accessToken);
     this.tokenStorage.saveUser(user);
     console.log(user)
+
   }
 
 

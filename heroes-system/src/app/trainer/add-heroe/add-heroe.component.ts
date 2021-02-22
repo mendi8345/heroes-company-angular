@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormArray, FormControl, Validators} from '@angular/forms';
 import {ActivatedRoute, Router, Params} from '@angular/router';
 import {TokenStorageService} from 'src/app/auth/token-storage.service';
 import {TrainerApiService} from '../trainer-api.service';
+import {Heroe} from '../heroe.model';
+import {TrainerService} from '../trainer.service';
 
 @Component({
   selector: 'app-add-heroe',
@@ -11,34 +13,52 @@ import {TrainerApiService} from '../trainer-api.service';
 })
 export class AddHeroeComponent implements OnInit {
 
-  id: number;
-  editMode = false;
+  index: number;
+  editMode=false;
   heroeForm: FormGroup;
-
-  get ingredientsControls() {
-    return (this.heroeForm.get('ingredients') as FormArray).controls;
-  }
+  trainerId=this.tokenService.getUser().id;
+  title: any
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private trainerApiService: TrainerApiService,
-    private tokenService: TokenStorageService,
-    private router: Router
-  ) {}
-
+    private trainerService: TrainerService,
+    private tokenService: TokenStorageService
+  ) { }
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      this.id = +params['id'];
-      this.editMode = params['id'] != null;
+      this.index=params['id'];
+      this.editMode=params['id']!=null;
+      console.log(this.trainerService.getHeroe(this.index))
       this.initForm();
+      console.log(this.heroeForm.value)
+      this.title=this.editMode==true? "update hero":"add hero";
     });
   }
 
   onSubmit() {
     if (this.editMode) {
-      // this.heroeService.updateHeroe(this.id, this.heroeForm.value);
+      this.trainerApiService.updateHeroe(this.trainerId, this.trainerService.getHeroe(this.index).id, this.heroeForm.value)
+        .subscribe(
+          res => {
+            this.trainerService.updateHeroe(this.index, this.heroeForm.value)
+            console.log("update sucsses")
+          }, err => {
+            console.log(err)
+          })
+
     } else {
-      this.trainerApiService.addHeroe(this.tokenService.getUser().id,this.heroeForm.value);
+      console.log("inSubmit")
+      this.trainerApiService.addHeroe(this.tokenService.getUser().id, this.heroeForm.value).subscribe(
+        data => {
+          this.trainerService.addHeroe(data);
+        },
+        err => {
+          console.log(err.error.message)
+          alert(err.error.message)
+        }
+      );
     }
     this.onCancel();
   }
@@ -47,30 +67,33 @@ export class AddHeroeComponent implements OnInit {
 
 
   onCancel() {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 
   private initForm() {
-    let heroeName = '';
+    let heroeId=0;
+    let heroeName='';
     // let heroeImagePath = '';
-    let heroeAbility = '';
-    let heroeCurrentPower = '';
-    let heroeStartingPower = '';
-    let heroeStartDate = '';
-    let heroeSuitColors = '';
+    let heroeAbility='';
+    let heroeCurrentPower='';
+    let heroeStartingPower='';
+    let heroeStartDate='';
+    let heroeSuitColors='';
 
-    // if (this.editMode) {
-    //   const heroe = this.heroeService.getHeroe(this.id);
-    //   heroeName = heroe.name;
-    //   heroeAbility = heroe.ability;
-    //   heroeCurrentPower = heroe.currentPower;
-    //   heroeStartingPower = heroe.startingPower;
-    //   heroeStartDate = heroe.startDate;
-    //   heroeSuitColors = heroe.suitColors;
+    if (this.editMode) {
+      const heroe=this.trainerService.getHeroe(this.index);
+      heroeId=heroe.id;
+      heroeName=heroe.name;
+      heroeAbility=heroe.ability;
+      heroeCurrentPower=heroe.currentPower;
+      heroeStartingPower=heroe.startingPower;
+      heroeStartDate=heroe.startDate;
+      heroeSuitColors=heroe.suitColors;
 
-    // }
+    }
 
-    this.heroeForm = new FormGroup({
+    this.heroeForm=new FormGroup({
+      id: new FormControl(heroeId),
       name: new FormControl(heroeName, Validators.required),
       ability: new FormControl(heroeAbility, Validators.required),
       currentPower: new FormControl(heroeCurrentPower, Validators.required),

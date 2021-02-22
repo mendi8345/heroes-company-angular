@@ -8,7 +8,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 
-import { AuthService, AuthResponseData } from './auth.service';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -24,8 +24,7 @@ export class AuthComponent implements OnDestroy {
 
   constructor(
     private authService: AuthService,
-    private router: Router,
-    private componentFactoryResolver: ComponentFactoryResolver
+    private router: Router
   ) {}
 
   onSwitchMode() {
@@ -40,7 +39,7 @@ export class AuthComponent implements OnDestroy {
     const username = form.value.username;
     const password = form.value.password;
 
-    let authObs: Observable<AuthResponseData>;
+    let authObs: Observable<any>;
 
     this.isLoading = true;
 
@@ -57,8 +56,12 @@ export class AuthComponent implements OnDestroy {
         this.router.navigate(['/trainer']);
       },
       errorMessage => {
-        console.log(errorMessage);
-        this.error = errorMessage;
+        if(errorMessage.error.errors)
+        this.error = errorMessage.error.errors[0].defaultMessage;
+        else
+        this.error = errorMessage.error.message
+        console.log(this.error);
+
         // this.showErrorAlert(errorMessage);
         this.isLoading = false;
       }

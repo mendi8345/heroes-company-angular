@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {TokenStorageService} from '../auth/token-storage.service';
 import {TrainerApiService} from './trainer-api.service';
-import {Heroe} from './trainer-heroes/Heroe.model';
+import {Heroe} from './heroe.model';
 import {TrainerService} from './trainer.service';
 
 @Injectable({

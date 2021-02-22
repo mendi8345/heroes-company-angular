@@ -2,7 +2,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {tap} from 'rxjs/operators';
-import {Heroe} from './trainer-heroes/Heroe.model';
+import {Heroe} from './heroe.model';
 
 
 

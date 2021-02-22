@@ -9,7 +9,7 @@ import {TokenStorageService} from '../auth/token-storage.service';
 export class HeaderComponent  implements OnInit {
   private roles: string[];
   isLoggedIn = false;
-  showAdminBoard = false;
+  showTrainerBoard = false;
   username: string;
 
   constructor(private tokenStorageService: TokenStorageService) { }
@@ -21,17 +21,19 @@ export class HeaderComponent  implements OnInit {
       const user = this.tokenStorageService.getUser();
       this.roles = user.roles;
 
-      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
+      this.showTrainerBoard = this.roles.includes('ROLE_ADMIN');
       // this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
 
       this.username = user.username;
     }
+    console.log(this.showTrainerBoard)
   }
 
   logout() {
     this.tokenStorageService.signOut();
     window.location.reload();
   }
+  changeMode(){}
 }
 
 

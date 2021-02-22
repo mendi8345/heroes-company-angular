@@ -1,0 +1,53 @@
+<!-- <div class="row" style="align-items: center ;flex-direction: column;position: fixed;">
+
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>{{ heroe.name }}</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="btn-group" appDropdown>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            {{ heroe.currentPower}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+
+        </div>
+    </div>
+</div> -->
+<!-- <hr> -->
+
+
+<div class="card">
+    <!-- <h2 style="text-align:center"> Profile Card</h2> -->
+    <img src="../../../assets/hero.jpg" alt="John" style="width:100%">
+    <h1>{{heroe.name}}</h1>
+    <div style="display: flex;flex-wrap: wrap;
+    justify-content: center;">
+        <p class="title">power {{heroe.currentPower}}</p>
+        <p> main ability: {{heroe.ability}}</p>
+        <p> joind on: {{heroe.startDate}}</p>
+        <div>
+            <p> workouts left for today: {{heroe.dailyPracticeState.practiceCounter}}</p>
+        </div>
+
+    </div>
+
+
+    <p style="display: flex;
+    justify-content: center;">
+        <button class="edit" (click)="onEditHeroe()">edit</button> <br>
+
+        <button class="train" (click)="trainHeroe()">train</button>
+    </p>
+</div>

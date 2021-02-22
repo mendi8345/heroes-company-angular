@@ -1,13 +1,31 @@
-<a style="cursor: pointer;" [routerLink]="[index]" routerLinkActive="active" class="list-group-item clearfix">
-    <div class="pull-left">
+<!-- <a style="cursor: pointer;" [routerLink]="[index]" routerLinkActive="active" class="list-group-item clearfix">
+    <div class="pull-left" style="display: flex;">
         <h4 class="list-group-item-heading">{{ heroe.name }}</h4>
         <p class="list-group-item-text">{{ heroe.currentPower }}</p>
+        <p class="list-group-item-text">{{ heroe.startingPower }}</p>
+        <p class="list-group-item-text">{{ heroe.ability }}</p>
+        <p class="list-group-item-text">{{ heroe.startDate }}</p>
+        <p class="list-group-item-text">{{ heroe.suitColors }}</p>
     </div>
-    <!-- <span class="pull-right">
+</a> -->
+
+<!-- <span class="pull-right">
         <img
           [src]="heroe.imagePath"
           alt="{{ heroe.name }}"
           class="img-responsive"
           style="max-height: 50px;">
       </span> -->
+<a style="cursor: pointer; text-decoration: none; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);    padding: .40rem .40rem; border: none;" [routerLink]="[index]" routerLinkActive="active" class="list-group-item clearfix">
+    <div class="card text-dark" style="width: 18rem;">
+        <!-- <img src="..." class="card-img-top" alt="..."> -->
+        <div class="card-body">
+            <h5 class="card-title"> {{ heroe.name }}</h5>
+            <h6 class="card-title">power {{ heroe.currentPower }}</h6>
+            <!-- <p class="">Joind the system on {{ heroe.startDate }}, with starting power of {{heroe.startingPower}}. current Power is {{heroe.currentPower}}, main ability is {{heroe.ability }}, suit Color is {{heroe.suitColors}}
+            </p> -->
+            <!-- <a href="#" class="btn btn-danger stretched-link">Train hero</a> -->
+        </div>
+    </div>
 </a>
+<br>
