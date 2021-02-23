@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Component, DoCheck, OnInit} from '@angular/core';
+import {ActivatedRoute, Router, RouterStateSnapshot} from '@angular/router';
 
 @Component({
   selector: 'app-trainer',
@@ -8,10 +8,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class TrainerComponent implements OnInit {
 
-  constructor( private router: Router, private route: ActivatedRoute) { }
+  constructor(private router: Router, private route: ActivatedRoute,) { }
 
   ngOnInit(): void {
-this.router.navigate(['new'], {relativeTo: this.route})
+    this.router.navigate(['new'], {relativeTo: this.route})
   }
+
 
 }

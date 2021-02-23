@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import {AfterViewChecked, Component, DoCheck, OnChanges, OnInit} from '@angular/core';
+import {Router, ActivatedRoute, RouterStateSnapshot, RouterState} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {AuthService} from 'src/app/auth/auth.service';
 import {TokenStorageService} from 'src/app/auth/token-storage.service';
@@ -13,33 +13,43 @@ import {Heroe} from '../heroe.model';
   templateUrl: './trainer-heroes.component.html',
   styleUrls: ['./trainer-heroes.component.css']
 })
-export class TrainerHeroesComponent implements OnInit {
+export class TrainerHeroesComponent implements OnInit, DoCheck {
 
   heroes: Heroe[];
   subscription: Subscription;
+  isLoading=false
+  newMode=false
+  counter=0
+
 
   constructor(private trainerService: TrainerService,
     private trainerApiService: TrainerApiService,
     private authService: AuthService,
     private tokenService: TokenStorageService,
-              private router: Router,
-              private route: ActivatedRoute) {
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {
   }
 
   ngOnInit() {
-    const user =this.tokenService.getUser;
-    console.log(user)
+    const user=this.tokenService.getUser;
+    // this.isLoading=true
 
-    this.subscription = this.trainerService.heroesChanged
+    this.subscription=this.trainerService.heroesChanged
       .subscribe(
         (heroes: Heroe[]) => {
-          this.heroes = heroes;
+          this.isLoading=true
+
+          setTimeout(() => {
+            this.isLoading=false
+          }, 1000);
+          this.heroes=heroes;
         }
       );
-    this.heroes = this.trainerService.getheroes();
-    // const user =this.tokenService.getUser;
-    // let id=user.id;
-    //  this.trainerApiService.getheroesOfTrainer(id);
+    this.heroes=this.trainerService.getheroes();
+  }
+  ngDoCheck() {
+    this.newMode=window.location.pathname=="/trainer/new"
 
   }
 

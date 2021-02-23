@@ -16,7 +16,10 @@
           class="img-responsive"
           style="max-height: 50px;">
       </span> -->
-<a style="cursor: pointer; text-decoration: none; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);    padding: .40rem .40rem; border: none;" [routerLink]="[index]" routerLinkActive="active" class="list-group-item clearfix">
+<a style="cursor: pointer; text-decoration: none;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: .40rem .40rem; border: none;position: relative;
+  z-index: 0;" [routerLink]="[index]" routerLinkActive="active" class="list-group-item clearfix">
     <div class="card text-dark" style="width: 18rem;">
         <!-- <img src="..." class="card-img-top" alt="..."> -->
         <div class="card-body">
@@ -26,6 +29,9 @@
             </p> -->
             <!-- <a href="#" class="btn btn-danger stretched-link">Train hero</a> -->
         </div>
+    </div>
+    <div *ngIf="isLoading" style="text-align: center;">
+        <app-loading-spinner></app-loading-spinner>
     </div>
 </a>
 <br>

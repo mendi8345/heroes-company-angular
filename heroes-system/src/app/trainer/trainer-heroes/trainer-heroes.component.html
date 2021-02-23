@@ -1,11 +1,20 @@
 <div class="row" style="position: relative;">
-    <div class="col-xs-12">
-        <button class="btn btn-dark text-warning" (click)="onNewHeroe()">New Heroe</button>
+
+    <div *ngIf="!newMode" class="col-xs-12 ">
+        <button class="btn btn-dark text-warning " (click)="onNewHeroe() ">New Heroe</button>
     </div>
 </div>
 <hr>
-<div class="row">
-    <div class="col-xs-6" style="display: flex;flex-direction: column; align-items: center;">
-        <app-heroe *ngFor="let heroeEl of heroes; let i = index" [heroe]="heroeEl" [index]="i"></app-heroe>
+
+<div *ngIf="isLoading" style="text-align: center; ">
+    <app-loading-spinner></app-loading-spinner>
+</div>
+<div *ngIf="heroes.length<=0" style="text-align: center; ">
+    <h2>You have no heroes to show! Please add a hero</h2>
+</div>
+
+<div class="row" *ngIf="heroes.length>0">
+    <div class="col-xs-6 " style="display: flex;flex-direction: column; align-items: center; ">
+        <app-heroe *ngFor="let heroeEl of heroes; let i=index " [heroe]="heroeEl " [index]="i "></app-heroe>
     </div>
 </div>

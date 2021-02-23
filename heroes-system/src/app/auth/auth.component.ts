@@ -7,6 +7,8 @@ import {
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
+import {tap} from 'rxjs/internal/operators/tap';
+import {TrainerApiService} from '../trainer/trainer-api.service';
 
 import { AuthService } from './auth.service';
 
@@ -18,14 +20,17 @@ export class AuthComponent implements OnDestroy {
   isLoginMode = true;
   isLoading = false;
   error: string = null;
+  trainer: {id,name} = null;
   // @ViewChild(PlaceholderDirective, { static: false }) alertHost: PlaceholderDirective;
 
   private closeSub: Subscription;
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private trainerApiService: TrainerApiService
   ) {}
+
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
@@ -40,38 +45,51 @@ export class AuthComponent implements OnDestroy {
     const password = form.value.password;
 
     let authObs: Observable<any>;
-
     this.isLoading = true;
 
     if (this.isLoginMode) {
       authObs = this.authService.login({username, password});
     } else {
-      authObs = this.authService.register({username,email, password});
+      authObs = this.authService.register({username,email, password})
+      console.log("1");
     }
-
     authObs.subscribe(
       resData => {
+        if(!this.isLoginMode){
+          const id=resData.id
+          const name=resData.username
+           this.trainer={id, name}
+
         console.log(resData);
         // this.isLoading = false;
-        this.router.navigate(['/trainer']);
-      },
-      errorMessage => {
-        if(errorMessage.error.errors)
-        this.error = errorMessage.error.errors[0].defaultMessage;
-        else
-        this.error = errorMessage.error.message
-        console.log(this.error);
+        this.signpTrainer(this.trainer)
 
-        // this.showErrorAlert(errorMessage);
+      }else
+      this.router.navigate(['/trainer']);
+    },
+      errorMessage => {
+        // this.error = errorMessage.error.errors[0].defaultMessage;
+        this.error = errorMessage
         this.isLoading = false;
       }
     );
-
     form.reset();
+
   }
+
 
   onHandleError() {
     this.error = null;
+  }
+   signpTrainer (trainer:{id,name}) {
+     this.trainerApiService.register(trainer).subscribe(
+            data => {
+              console.log(data)
+              this.router.navigate(['/trainer']);
+            },
+            err => {
+              console.log(err);
+            });
   }
 
   ngOnDestroy() {
@@ -79,21 +97,4 @@ export class AuthComponent implements OnDestroy {
       this.closeSub.unsubscribe();
     }
   }
-
-  // private showErrorAlert(message: string) {
-  //   // const alertCmp = new AlertComponent();
-  //   const alertCmpFactory = this.componentFactoryResolver.resolveComponentFactory(
-  //     AlertComponent
-  //   );
-  //   const hostViewContainerRef = this.alertHost.viewContainerRef;
-  //   hostViewContainerRef.clear();
-
-  //   const componentRef = hostViewContainerRef.createComponent(alertCmpFactory);
-
-  //   componentRef.instance.message = message;
-  //   this.closeSub = componentRef.instance.close.subscribe(() => {
-  //     this.closeSub.unsubscribe();
-  //     hostViewContainerRef.clear();
-  //   });
-  // }
 }

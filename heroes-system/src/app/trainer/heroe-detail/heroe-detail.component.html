@@ -28,26 +28,46 @@
 <!-- <hr> -->
 
 
-<div class="card">
+<div class="card" style="font-size: 0.9rem;font-weight: 600;">
+
     <!-- <h2 style="text-align:center"> Profile Card</h2> -->
-    <img src="../../../assets/hero.jpg" alt="John" style="width:100%">
+    <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/ebcc6051-ce4d-443a-9d2c-32a41046cfc7/db8nd2v-29bb53b9-381e-4276-a54c-4763cce7da5f.png/v1/fill/w_1024,h_1024,q_80,strp/superman_icon_profile_pic_by_thejklay_db8nd2v-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3siaGVpZ2h0IjoiPD0xMDI0IiwicGF0aCI6IlwvZlwvZWJjYzYwNTEtY2U0ZC00NDNhLTlkMmMtMzJhNDEwNDZjZmM3XC9kYjhuZDJ2LTI5YmI1M2I5LTM4MWUtNDI3Ni1hNTRjLTQ3NjNjY2U3ZGE1Zi5wbmciLCJ3aWR0aCI6Ijw9MTAyNCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.3UAGI7gUgicRGGMUF-nQJ12mJqeRgxfihyLWjWgKcWA"
+        alt="John" style="width:100%">
     <h1>{{heroe.name}}</h1>
-    <div style="display: flex;flex-wrap: wrap;
-    justify-content: center;">
-        <p class="title">power {{heroe.currentPower}}</p>
-        <p> main ability: {{heroe.ability}}</p>
-        <p> joind on: {{heroe.startDate}}</p>
-        <div>
+    <!-- <div style="display: flex;flex-wrap: wrap;
+    justify-content: center;"> -->
+    <div class="row container" style="justify-content: center; flex-wrap: nowrap; flex-direction: column;">
+        <div class="col-xs-12">
+            <p class="title">power {{heroe.currentPower}}</p>
+
+        </div>
+        <div class="col-xs-12">
+            <p> main ability: {{heroe.ability}}</p>
+
+        </div>
+        <div class="col-xs-12">
+            <p> joind on: {{heroe.startDate}}</p>
+
+        </div>
+
+        <div class="col-xs-12" style="color: crimson; font-size: 1.1rem;font-weight: 700;">
             <p> workouts left for today: {{heroe.dailyPracticeState.practiceCounter}}</p>
         </div>
 
     </div>
 
-
+    <div *ngIf="isLoading" style="text-align: center;">
+        <app-loading-spinner></app-loading-spinner>
+    </div>
     <p style="display: flex;
+
     justify-content: center;">
-        <button class="edit" (click)="onEditHeroe()">edit</button> <br>
+        <button class="edit" (click)="onEditHeroe()">edit</button>
 
         <button class="train" (click)="trainHeroe()">train</button>
     </p>
+
+
 </div>
+
+<app-alert [message]="error" *ngIf="error" (close)="onHandleError()"></app-alert>

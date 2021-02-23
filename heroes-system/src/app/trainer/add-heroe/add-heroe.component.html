@@ -1,7 +1,9 @@
 <!-- Full screen modal -->
 
 <div class="row container" style="justify-content: center;">
-
+    <div *ngIf="isLoading" style="text-align: center;">
+        <app-loading-spinner></app-loading-spinner>
+    </div>
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h3>{{title}}
@@ -9,11 +11,7 @@
             <hr>
         </div>
         <form [formGroup]="heroeForm" (ngSubmit)="onSubmit()">
-            <div class="row" style="justify-content: center;">
-                <div class="col-xs-12">
 
-                </div>
-            </div>
             <div class="row" style="justify-content: center;">
                 <div class="col-xs-12 ">
                     <div class="form-group ">
@@ -39,7 +37,7 @@
                 <div class="col-xs-12 ">
                     <div class="form-group">
                         <label for="currentPower">current Power</label>
-                        <input type="text" id="currentPower" class="form-control " formControlName="currentPower" rows="6 ">
+                        <input type="number" id="currentPower" class="form-control " formControlName="currentPower" rows="6 ">
                     </div>
                 </div>
             </div>
@@ -47,7 +45,16 @@
                 <div class="col-xs-12 ">
                     <div class="form-group ">
                         <label for="startingPower">starting Power</label>
-                        <input type="number " id="startingPower" class="form-control " formControlName="startingPower" rows="6 ">
+                        <input type="number" id="startingPower" class="form-control " formControlName="startingPower" rows="6 ">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="justify-content: center;">
+                <div class="col-xs-12 ">
+                    <div class="form-group ">
+                        <label for="suitColors">suit Colors</label>
+                        <input type="text" id="suitColors" class="form-control " formControlName="suitColors" rows="6 ">
                     </div>
                 </div>
             </div>
@@ -55,24 +62,19 @@
                 <div class="col-xs-12 ">
                     <div class="form-group ">
                         <label for="startDate">start date</label>
-                        <input type="date" id="startDate" class="form-control " formControlName="startDate" rows="6 ">
+                        <input type="date" id="startDate" class="form-control " formControlName="startDate" rows="6">
                     </div>
                 </div>
             </div>
-            <div class="row" style="justify-content: center;">
-                <div class="col-xs-12 ">
-                    <div class="form-group ">
-                        <label for="suitColors">suit Colors</label>
-                        <input type="text " id="suitColors" class="form-control " formControlName="suitColors" rows="6 ">
-                    </div>
-                </div>
+            <div class="row" style="justify-content: center; ">
+                <button type="submit" class="btn btn-primary " [disabled]="!heroeForm.valid">
+                Save
+              </button>
+                <button type="button " class="btn btn-danger " (click)="onCancel() ">
+                Cancel
+              </button>
             </div>
-            <button type="submit" class="btn btn-primary">
-              Save
-            </button>
-            <button type="button" class="btn btn-danger" (click)="onCancel()">
-              Cancel
-            </button>
+
         </form>
     </div>
 </div>

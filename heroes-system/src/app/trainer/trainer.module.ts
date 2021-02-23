@@ -9,23 +9,26 @@ import {TrainerHeroesComponent} from './trainer-heroes/trainer-heroes.component'
 import {TrainerProfileComponent} from './trainer-profile/trainer-profile.component';
 
 import { HeroeDetailComponent } from './heroe-detail/heroe-detail.component';
+import {SharedModule} from '../shared/shared.module';
 
 
 @NgModule({
   declarations: [
     TrainerComponent,
    TrainerHeroesComponent,
-  //  HeroeDetailComponent,
+   HeroeDetailComponent,
   HeroeComponent,
   AddHeroeComponent,
   TrainerProfileComponent,
-  HeroeDetailComponent
+  HeroeDetailComponent,
+
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    TrainerRoutingModule
+    TrainerRoutingModule,
+    SharedModule
   ]
 })
 export class trainerModule {}

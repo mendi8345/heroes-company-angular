@@ -18,6 +18,7 @@ export class AddHeroeComponent implements OnInit {
   heroeForm: FormGroup;
   trainerId=this.tokenService.getUser().id;
   title: any
+  isLoading=false
 
   constructor(
     private route: ActivatedRoute,
@@ -30,43 +31,43 @@ export class AddHeroeComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.index=params['id'];
       this.editMode=params['id']!=null;
-      console.log(this.trainerService.getHeroe(this.index))
       this.initForm();
-      console.log(this.heroeForm.value)
       this.title=this.editMode==true? "update hero":"add hero";
     });
   }
 
   onSubmit() {
+    this.isLoading=true
     if (this.editMode) {
       this.trainerApiService.updateHeroe(this.trainerId, this.trainerService.getHeroe(this.index).id, this.heroeForm.value)
         .subscribe(
           res => {
             this.trainerService.updateHeroe(this.index, this.heroeForm.value)
-            console.log("update sucsses")
           }, err => {
             console.log(err)
           })
 
     } else {
-      console.log("inSubmit")
       this.trainerApiService.addHeroe(this.tokenService.getUser().id, this.heroeForm.value).subscribe(
         data => {
           this.trainerService.addHeroe(data);
         },
         err => {
           console.log(err.error.message)
-          alert(err.error.message)
         }
       );
     }
-    this.onCancel();
+    setTimeout(() => {
+      this.onCancel();
+    }, 2000);
+
   }
 
 
 
 
   onCancel() {
+    this.isLoading=false
     this.router.navigate(['../'], {relativeTo: this.route});
   }
 
